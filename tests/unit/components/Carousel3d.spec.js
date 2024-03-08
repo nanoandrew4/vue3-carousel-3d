@@ -3,8 +3,11 @@
 
 const Vue = require('vue');
 const utils = require('../utils');
-import Carousel3d from "@/carousel-3d/Carousel3d/Carousel3d.vue";
-import Slide from "@/carousel-3d/Slide/Slide.vue";
+
+import { describe, it } from 'vitest'
+
+import Carousel3d from "@/components/Carousel3d/Carousel3d.vue";
+import Slide from "@/components/Slide/Slide.vue";
 
 
 describe('Carousel3d', () => {
