@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-3d-slide"  :style="slideStyle" :class="computedClasses" @click="goTo()">
+  <div class="carousel-3d-slide" :style="slideStyle" :class="computedClasses" @click="goTo()">
     <slot :index="index" :isCurrent="isCurrent" :leftIndex="leftIndex" :rightIndex="rightIndex" />
   </div>
 </template>
@@ -45,7 +45,7 @@ export default defineComponent({
       return this.getSideIndex(this.parent.rightIndices)
     },
     slideStyle(): StyleValue {
-      let styles: StyleValue = {}
+      let styles: StyleValue = this.baseStyle()
 
       if (!this.isCurrent) {
         const lIndex = this.leftIndex
@@ -65,8 +65,6 @@ export default defineComponent({
             styles = this.calculatePosition(this.parent.rightIndices.length - 1, true, this.zIndex)
           }
         }
-      } else {
-        styles = this.baseStyle()
       }
       return styles
     },
