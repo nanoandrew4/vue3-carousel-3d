@@ -1,12 +1,12 @@
 <template>
-  <div class="carousel-3d-slide" :style="slideStyle" :class="computedClasses" @click="goTo()">
+  <div class="carousel-3d-slide"  :style="slideStyle" :class="computedClasses" @click="goTo()">
     <slot :index="index" :isCurrent="isCurrent" :leftIndex="leftIndex" :rightIndex="rightIndex" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type StyleValue } from 'vue'
-import type Carousel3d from '../Carousel3d/Carousel3d.vue'
+import type Carousel3d from '@/components/Carousel3d/Carousel3d.vue'
 
 export default defineComponent({
   props: {
@@ -32,7 +32,6 @@ export default defineComponent({
         this.getSideIndex(this.parent.leftIndices) > this.parent.currentIndex - 1
       )
         return -1
-
       return this.getSideIndex(this.parent.leftIndices)
     },
     rightIndex() {
@@ -66,6 +65,8 @@ export default defineComponent({
             styles = this.calculatePosition(this.parent.rightIndices.length - 1, true, this.zIndex)
           }
         }
+      } else {
+        styles = this.baseStyle()
       }
       return styles
     },
@@ -81,29 +82,20 @@ export default defineComponent({
     getSideIndex(array: number[]) {
       let index = -1
 
-      array.forEach((pos, i) => {
-        if (this.matchIndex(pos)) {
-          index = i
-        }
-      })
+      if (array) {
+        array.forEach((pos, i) => {
+          if (this.matchIndex(pos)) {
+            index = i
+          }
+        })
+      }
 
       return index
     },
     matchIndex(index: number): boolean {
       return index >= 0 ? this.index === index : this.parent.total + index === this.index
     },
-    calculatePosition(i: number, positive: boolean, zIndex: number): StyleValue {
-      const z = !this.parent.disable3d ? parseInt(this.parent.inverseScaling) + (i + 1) * 100 : 0
-      const y = !this.parent.disable3d ? parseInt(this.parent.perspective) : 0
-      const leftRemain =
-        this.parent.space === 'auto'
-          ? (i + 1) * (this.parent.width / 1.5)
-          : (i + 1) * this.parent.space
-      const transform = positive
-        ? 'translateX(' + leftRemain + 'px) translateZ(-' + z + 'px) ' + 'rotateY(-' + y + 'deg)'
-        : 'translateX(-' + leftRemain + 'px) translateZ(-' + z + 'px) ' + 'rotateY(' + y + 'deg)'
-      const top = this.parent.space === 'auto' ? 0 : (i + 1) * this.parent.space
-
+    baseStyle(): StyleValue {
       return {
         'border-width': this.parent.border + 'px',
         width: this.parent.slideWidth + 'px',
@@ -117,11 +109,27 @@ export default defineComponent({
           'ms, ' +
           '               visibility ' +
           this.parent.animationSpeed +
-          'ms',
+          'ms'
+      }
+    },
+    calculatePosition(i: number, positive: boolean, zIndex: number): StyleValue {
+      const styles: StyleValue = this.baseStyle()
+      const z = !this.parent.disable3d ? parseInt(this.parent.inverseScaling) + (i + 1) * 100 : 0
+      const y = !this.parent.disable3d ? parseInt(this.parent.perspective) : 0
+      const leftRemain =
+        this.parent.space === 'auto'
+          ? (i + 1) * (this.parent.width / 1.5)
+          : (i + 1) * this.parent.space
+      const transform = positive
+        ? 'translateX(' + leftRemain + 'px) translateZ(-' + z + 'px) ' + 'rotateY(-' + y + 'deg)'
+        : 'translateX(-' + leftRemain + 'px) translateZ(-' + z + 'px) ' + 'rotateY(' + y + 'deg)'
+      const top = this.parent.space === 'auto' ? 0 : (i + 1) * this.parent.space
+
+      return Object.assign(styles, {
         transform: transform,
         top: top,
         zIndex: zIndex - (Math.abs(i) + 1)
-      }
+      })
     },
     goTo() {
       if (!this.isCurrent) {

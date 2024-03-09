@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Slide should mount successfully 1`] = `
+exports[`Slide > should mount successfully 1`] = `
 ".carousel-3d-slider(style='width: 362px; height: 272px;')
   .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
 // 

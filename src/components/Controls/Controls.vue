@@ -3,8 +3,8 @@
     <a
       href="#"
       class="prev"
-      @click.prevent="parent.goPrev()"
-      :class="{ disabled: !parent.isPrevPossible }"
+      @click.prevent="$emit('goPrev')"
+      :class="{ disabled: isPrevPossible }"
       :style="`width: ${width}px; height: ${height}px; line-height: ${height}px;`"
       aria-label="Previous slide"
     >
@@ -13,8 +13,8 @@
     <a
       href="#"
       class="next"
-      @click.prevent="parent.goNext()"
-      :class="{ disabled: !parent.isNextPossible }"
+      @click.prevent="$emit('goNext')"
+      :class="{ disabled: isNextPossible }"
       :style="`width: ${width}px; height: ${height}px; line-height: ${height}px;`"
       aria-label="Next slide"
     >
@@ -25,22 +25,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Carousel3d from '../Carousel3d/Carousel3d.vue';
 
 export default defineComponent({
+  emits: ['goPrev', 'goNext'],
   props: {
-    /**
-     * Width in pixels of the navigation buttons
-     */
     width: {
-      type: [String, Number],
+      type: Number,
       default: 50
     },
-    /**
-     * Height in pixels of the navigation buttons
-     */
     height: {
-      type: [String, Number],
+      type: Number,
       default: 60
     },
     /**
@@ -56,12 +50,14 @@ export default defineComponent({
     nextHtml: {
       type: String,
       default: '&rsaquo;'
-    }
-  },
-  data() {
-    const parent = (this.$parent as unknown) as typeof Carousel3d
-    return {
-      parent,
+    },
+    isPrevPossible: {
+      type: Boolean,
+      required: true
+    },
+    isNextPossible: {
+      type: Boolean,
+      required: true
     }
   }
 })

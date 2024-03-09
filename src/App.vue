@@ -243,7 +243,7 @@ export default defineComponent({
   },
   data() {
     return {
-      slides: slides,
+      slides,
       slideCount: 10
     }
   },

@@ -10,6 +10,7 @@
     @mousemove="handleMousemove"
   >
     <div
+      id="carousel-3d-slider"
       class="carousel-3d-slider"
       :style="{
         width: slideWidth + 'px',
@@ -18,13 +19,17 @@
     >
       <slot />
     </div>
-    <controls
+    <Controls
       v-if="controlsVisible"
       :next-html="controlsNextHtml"
       :prev-html="controlsPrevHtml"
       :width="controlsWidth"
       :height="controlsHeight"
-    ></controls>
+      :is-prev-possible="isPrevPossible"
+      :is-next-possible="isNextPossible"
+      @go-prev="goPrev"
+      @go-next="goNext"
+    />
   </div>
 </template>
 
@@ -34,7 +39,7 @@ import Controls from '../Controls/Controls.vue'
 
 export default defineComponent({
   components: {
-    // Controls,
+    Controls
   },
   props: {
     count: {
@@ -74,7 +79,7 @@ export default defineComponent({
       default: 1
     },
     space: {
-      type: Number,
+      type: [Number, String],
       default: 'auto'
     },
     startIndex: {
@@ -127,6 +132,18 @@ export default defineComponent({
     oneDirectional: {
       type: Boolean,
       default: false
+    },
+    autoplay: {
+      type: Boolean,
+      default: false
+    },
+    autoplayTimeout: {
+      type: Number,
+      default: 2000
+    },
+    autoplayHoverPause: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -141,10 +158,16 @@ export default defineComponent({
       dragStartY: 0,
       mousedown: false,
       zIndex: 998,
-      mutationObserver
+      mutationObserver,
+      autoplayInterval: 0
     }
   },
-  // mixins: [autoplay],
+  destroyed() {
+    this.pauseAutoplay()
+
+    this.$el.removeEventListener('mouseenter', this.pauseAutoplay)
+    this.$el.removeEventListener('mouseleave', this.startAutoplay)
+  },
   watch: {
     count() {
       this.computeData()
@@ -385,9 +408,11 @@ export default defineComponent({
      * Get the number of slides
      */
     getSlideCount(): number {
+      const slider = document.getElementById('carousel-3d-slider')
       let ret = 0
-      if (this.$slots && this.$slots.default && this.$slots.default()[0]?.children)
-        ret = this.$slots.default()[0].children?.length as number
+      if (slider) {
+        ret = slider.children.length
+      }
       return ret
     },
     /**
@@ -402,8 +427,7 @@ export default defineComponent({
     computeData(firstRun?: boolean) {
       this.total = this.getSlideCount()
       if (firstRun || this.currentIndex >= this.total) {
-        this.currentIndex =
-          this.startIndex > this.total - 1 ? this.total - 1 : this.startIndex
+        this.currentIndex = this.startIndex > this.total - 1 ? this.total - 1 : this.startIndex
       }
 
       this.viewport = this.$el.clientWidth
@@ -412,15 +436,30 @@ export default defineComponent({
       this.$el.style.cssText += 'height:' + this.slideHeight + 'px;'
       this.$el.childNodes[0].style.cssText +=
         'width:' + this.slideWidth + 'px;' + ' height:' + this.slideHeight + 'px;'
+    },
+    pauseAutoplay() {
+      if (this.autoplayInterval) clearInterval(this.autoplayInterval)
+    },
+    startAutoplay() {
+      if (this.autoplay) {
+        this.autoplayInterval = setInterval(() => {
+          this.dir === 'ltr' ? this.goPrev() : this.goNext()
+        }, this.autoplayTimeout)
+      }
     }
   },
-
   mounted() {
     this.computeData(true)
     this.attachMutationObserver()
     window.addEventListener('resize', this.setSize)
-  },
 
+    if (this.autoplayHoverPause) {
+      this.$el.addEventListener('mouseenter', this.pauseAutoplay)
+      this.$el.addEventListener('mouseleave', this.startAutoplay)
+
+      this.startAutoplay()
+    }
+  },
   beforeUnmount() {
     this.detachMutationObserver()
     window.removeEventListener('resize', this.setSize)
