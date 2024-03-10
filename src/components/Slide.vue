@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, type StyleValue } from 'vue'
-import type Carousel3d from '@/components/Carousel3d.vue'
+import type Carousel3d from './Carousel3d.vue'
 
 export default defineComponent({
   props: {

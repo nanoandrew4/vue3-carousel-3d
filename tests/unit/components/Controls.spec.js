@@ -1,8 +1,8 @@
-import { h } from 'vue'
 import { mount } from '@vue/test-utils'
 
 import Carousel3d from '../../../src/components/Carousel3d.vue'
-import Slide from '../../../src/components/Slide.vue'
+
+import { getNSlides } from '../utils'
 
 describe('Controls', () => {
   let wrapper
@@ -14,29 +14,7 @@ describe('Controls', () => {
         controlsVisible: true
       },
       slots: {
-        default: () =>
-          Array.apply(null, { length: 4 }).map((k, index) =>
-            h(
-              Slide,
-              {
-                index: index
-              },
-              {
-                default: (props) =>
-                  h({
-                    setup() {
-                      return () =>
-                        h('div', {
-                          'data-left-index': props.leftIndex,
-                          'data-right-index': props.rightIndex,
-                          'data-index': props.index,
-                          'data-is-current': props.isCurrent ? 'true' : null
-                        })
-                    }
-                  })
-              }
-            )
-          )
+        default: () => getNSlides(4, true)
       }
     })
     await wrapper.vm.$nextTick()
@@ -44,20 +22,20 @@ describe('Controls', () => {
     $controls = wrapper.vm.$el.querySelector('.carousel-3d-controls')
   })
 
-  test('should mount successfully', () => {
+  it('should mount successfully', () => {
     expect($controls).toBeDefined()
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('should render a next button', () => {
+  it('should render a next button', () => {
     expect(wrapper.vm.$el.querySelector('.next')).toBeDefined()
   })
 
-  test('should render a prev button', () => {
+  it('should render a prev button', () => {
     expect(wrapper.vm.$el.querySelector('.prev')).toBeDefined()
   })
 
-  test('should trigger onNext when next is clicked', () => {
+  it('should trigger onNext when next is clicked', () => {
     wrapper.vm.$el.querySelector('.next').click()
 
     return wrapper.vm.$nextTick().then(() => {
@@ -66,7 +44,7 @@ describe('Controls', () => {
     })
   })
 
-  test('should trigger onNext when next is clicked', () => {
+  it('should trigger onNext when next is clicked', () => {
     wrapper.vm.$el.querySelector('.prev').click()
 
     return wrapper.vm.$nextTick().then(() => {

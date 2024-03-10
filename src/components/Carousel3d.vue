@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Controls from '@/components/Controls.vue'
+import Controls from './Controls.vue'
 
 export default defineComponent({
   components: {
@@ -290,7 +290,9 @@ export default defineComponent({
     goSlide(index: number) {
       this.currentIndex = index < 0 || index > this.total - 1 ? 0 : index
 
-      if (this.isLastSlide) this.$emit('last-slide', this.currentIndex)
+      if (this.isLastSlide) {
+        this.$emit('last-slide', this.currentIndex)
+      }
 
       this.$emit('before-slide-change', this.currentIndex)
 
@@ -408,10 +410,9 @@ export default defineComponent({
      * Get the number of slides
      */
     getSlideCount(): number {
-      let ret = 0;
+      let ret = 0
       const slider = this.$refs.slider as HTMLElement
-      if (slider && slider.children)
-        ret = slider.children.length;
+      if (slider && slider.children) ret = slider.children.length
 
       return ret
     },
