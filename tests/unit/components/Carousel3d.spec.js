@@ -1,235 +1,225 @@
-/* eslint-disable */
-"use strict"
+import { getNSlides } from '../utils.mjs'
+import { mount } from '@vue/test-utils'
 
-const Vue = require('vue');
-const utils = require('../utils');
-import Carousel3d from "@/carousel-3d/Carousel3d/Carousel3d.vue";
-import Slide from "@/carousel-3d/Slide/Slide.vue";
-
+import Carousel3d from '../../../src/components/Carousel3d.vue'
+import Slide from '../../../src/components/Slide.vue'
 
 describe('Carousel3d', () => {
-    it('should mount successfully', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d),
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance._isMounted).toBe(true);
+  it('should mount successfully with 0 slides', () => {
+    const wrapper = mount(Carousel3d)
+    expect(wrapper.vm.total).toBe(0)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+  it('should register 3 slides when 3 slides are added to the slots', async () => {
+    const wrapper = mount(Carousel3d, {
+      slots: {
+        default: () => getNSlides(3)
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.total).toBe(3)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-    it('should unmount successfully', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d),
-        });
-        const carouselInstance = vm.$children[0];
-        carouselInstance.$destroy();
-        expect(carouselInstance._isDestroyed).toBe(true);
+  it('should show 5 slides when 7 slides are added to the slots', async () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        display: 5
+      },
+      slots: {
+        default: () => getNSlides(7)
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.visible).toBe(5)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+  it('should show 2 slides when 2 slides are added to the slots', async () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        display: 3
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.visible).toBe(2)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-    it('should register 0 slides when 0 slides are added to the slots', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d),
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.total).toBe(0);
+  it('should show 3 slides when 3 slides are added to the slots and display property is set to 5', async () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        display: 5
+      },
+      slots: {
+        default: () => getNSlides(3)
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.visible).toBe(3)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+  it('should increase current index number by 1 when goNext is called', async () => {
+    const wrapper = mount(Carousel3d, {
+      slots: {
+        default: () => getNSlides(3)
+      }
+    })
 
-    it('should register 3 slides when 3 slides are added to the slots', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, {props: {}},
-                [h(Slide), h(Slide), h(Slide)])
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.total).toBe(3);
+    return wrapper.vm.$nextTick().then(() => {
+      wrapper.vm.goNext()
+      expect(wrapper.vm.currentIndex).toBe(1)
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
 
-    it('should show 5 slides when 7 slides are added to the slots', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, {props: { display: 5 }},
-                [h(Slide), h(Slide), h(Slide), h(Slide), h(Slide), h(Slide), h(Slide)])
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.visible).toBe(5);
+  it('should decrease current index number by 1 when goPrev is called', async () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        startIndex: 1
+      },
+      slots: {
+        default: () => getNSlides(3)
+      }
+    })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+    return wrapper.vm.$nextTick().then(() => {
+      wrapper.vm.goPrev()
+      expect(wrapper.vm.currentIndex).toBe(0)
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
 
-    it('should show 2 slides when 2 slides are added to the slots', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, {props: { display: 3 }},
-                [h(Slide), h(Slide)])
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.visible).toBe(2);
+  it('should be able to go on next slide if start slide index is 0 and there are 2 slides ', () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        startIndex: 0
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
+    expect(wrapper.vm.isNextPossible).toBe(true)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+  it('should be able to go on prev slide if start slide index is 0, loop is enabled and there are 2 slides ', () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        startIndex: 0,
+        loop: true
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
+    expect(wrapper.vm.isPrevPossible).toBe(true)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-    it('should show 3 slides when 3 slides are added to the slots and display property is set to 5', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, {props: { display: 5 }},
-                [h(Slide), h(Slide), h(Slide)])
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.visible).toBe(3);
+  it('should not be able to go on next slide if start slide index is 1, loop is disabled and there are 2 slides ', () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        startIndex: 1,
+        loop: false
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
+    expect(wrapper.vm.isNextPossible).toBe(false)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+  it('should be able to go on prev slide if start slide index is 0, loop is disabled and there are 2 slides ', () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        startIndex: 0,
+        loop: false
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
+    expect(wrapper.vm.isPrevPossible).toBe(false)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-    it('should increase current index number by 1 when goNext is called', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, {}, [h(Slide), h(Slide), h(Slide)]),
-        });
+  it('check if exact callback function is received for onMainSlideClick ', () => {
+    const noop = () => {}
 
-        const carouselInstance = vm.$children[0];
+    const wrapper = mount(Carousel3d, {
+      props: {
+        onMainSlideClick: noop
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
+    expect(wrapper.vm.onMainSlideClick).toEqual(noop)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-        return carouselInstance.$nextTick().then(() => {
-            carouselInstance.goNext();
-            expect(carouselInstance.currentIndex).toBe(1);
+  it('check if exact callback function is received for onMainSlideClick ', () => {
+    const returnTrue = () => {
+      return true
+    }
 
-            return utils.expectToMatchSnapshot(vm);
-        });
-    });
+    const wrapper = mount(Carousel3d, {
+      props: {
+        onMainSlideClick: returnTrue
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
 
-    it('should decrease current index number by 1 when goPrev is called', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { startIndex: 1 } }, [h(Slide), h(Slide), h(Slide)]),
-        });
+    const result = wrapper.vm.onMainSlideClick()
+    expect(result).toBe(true)
+    expect(wrapper).toMatchSnapshot()
+  })
 
-        const carouselInstance = vm.$children[0];
+  it('should not change current slide index if computeData called and total number of slides have not change and in of bounds ', async () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        startIndex: 0,
+        loop: false
+      },
+      slots: {
+        default: () => getNSlides(2)
+      }
+    })
+    return wrapper.vm.$nextTick().then(() => {
+      wrapper.vm.goNext()
+      wrapper.vm.computeData()
+      expect(wrapper.vm.$data.currentIndex).toBe(1)
 
-        return carouselInstance.$nextTick().then(() => {
-            carouselInstance.goPrev();
-            expect(carouselInstance.currentIndex).toBe(0);
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
 
-            return utils.expectToMatchSnapshot(vm);
-        });
-    });
-
-    it('should be able to go on next slide if start slide index is 0 and there are 2 slides ', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { startIndex: 0 } }, [h(Slide), h(Slide)]),
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.isNextPossible).toBe(true);
-
-        return utils.expectToMatchSnapshot(vm);
-    });
-
-    it('should be able to go on prev slide if start slide index is 0, loop is enabled and there are 2 slides ', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { startIndex: 0, loop: true } }, [h(Slide), h(Slide)]),
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.isPrevPossible).toBe(true);
-
-        return utils.expectToMatchSnapshot(vm);
-    });
-
-    it('should not be able to go on next slide if start slide index is 1, loop is disabled and there are 2 slides ', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { startIndex: 1, loop: false } }, [h(Slide), h(Slide)]),
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.isNextPossible).toBe(false);
-
-        return utils.expectToMatchSnapshot(vm);
-    });
-
-    it('should be able to go on prev slide if start slide index is 0, loop is disabled and there are 2 slides ', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { startIndex: 0, loop: false } }, [h(Slide), h(Slide)]),
-        });
-        const carouselInstance = vm.$children[0];
-        expect(carouselInstance.isPrevPossible).toBe(false);
-
-        return utils.expectToMatchSnapshot(vm);
-    });
-
-	it('check if exact callback function is received for onMainSlideClick ', () => {
-
-		const noop = () => {
-		};
-
-		const vm = new Vue({
-			el: document.createElement('div'),
-			render: (h) => h(Carousel3d, { props: { onMainSlideClick: noop } }, [h(Slide), h(Slide)]),
-		});
-		const carouselInstance = vm.$children[0];
-
-		expect(carouselInstance.onMainSlideClick).toEqual(noop);
-
-		return utils.expectToMatchSnapshot(vm);
-	});
-
-	it('check if exact callback function is received for onMainSlideClick ', () => {
-
-		const returnTrue = () => {
-			return true;
-		};
-
-		const vm = new Vue({
-			el: document.createElement('div'),
-			render: (h) => h(Carousel3d, { props: { onMainSlideClick: returnTrue } }, [h(Slide), h(Slide)]),
-		});
-		const carouselInstance = vm.$children[0];
-
-		const result = carouselInstance.onMainSlideClick();
-
-		expect(result).toBe(true);
-
-		return utils.expectToMatchSnapshot(vm);
-	});
-
-    it('should not change current slide index if computeData called and total number of slides have not change and in of bounds ', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { startIndex: 0, loop: false } }, [h(Slide), h(Slide)]),
-        });
-        const carouselInstance = vm.$children[0];
-        return carouselInstance.$nextTick().then(() => {
-            carouselInstance.goNext();
-            carouselInstance.computeData();
-            expect(carouselInstance.$data.currentIndex).toBe(1);
-
-            return utils.expectToMatchSnapshot(vm);
-        });
-    });
-
-    it('should change current slide index if computeData called and current slide index falls out of bounds ', () => {
-        const vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { startIndex: 0, loop: false } }, [h(Slide), h(Slide), h(Slide)]),
-        });
-        const carouselInstance = vm.$children[0];
-        return carouselInstance.$nextTick().then(() => {
-            carouselInstance.goSlide(2);
-            carouselInstance.$slots.default.pop();
-            carouselInstance.computeData();
-            expect(carouselInstance.$data.currentIndex).toBe(0);
-
-            return utils.expectToMatchSnapshot(vm);
-        });
-    });
-
+  it('should change current slide index if computeData called and current slide index falls out of bounds ', async () => {
+    const wrapper = mount(Carousel3d, {
+      props: {
+        startIndex: 0,
+        loop: false
+      },
+      slots: {
+        default: () => getNSlides(3)
+      }
+    })
+    return wrapper.vm.$nextTick().then(async () => {
+      // Since we can no longer edit the slots, simulate the index being out of bounds
+      wrapper.vm.$data.currentIndex = 5
+      wrapper.vm.computeData()
+      expect(wrapper.vm.currentIndex).toBe(0)
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
 })

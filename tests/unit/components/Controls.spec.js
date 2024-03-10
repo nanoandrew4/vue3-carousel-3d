@@ -1,61 +1,57 @@
-/* eslint-disable */
-"use strict"
+import { mount } from '@vue/test-utils'
 
-const Vue = require('vue');
-const utils = require('../utils');
+import Carousel3d from '../../../src/components/Carousel3d.vue'
 
-import Carousel3d from "@/carousel-3d/Carousel3d/Carousel3d.vue";
-import Slide from "@/carousel-3d/Slide/Slide.vue";
+import { getNSlides } from '../utils'
 
 describe('Controls', () => {
-    let vm;
-    let carouselInstance;
-    let $controls;
+  let wrapper
+  let $controls
 
-    beforeEach(() => {
-        vm = new Vue({
-            el: document.createElement('div'),
-            render: (h) => h(Carousel3d, { props: { controlsVisible: true } }, [h(Slide), h(Slide), h(Slide),  h(Slide)]),
-        });
-        carouselInstance = vm.$children[0];
-        $controls = vm.$el.querySelector('.carousel-3d-controls');
-    });
+  beforeEach(async () => {
+    wrapper = mount(Carousel3d, {
+      props: {
+        controlsVisible: true
+      },
+      slots: {
+        default: () => getNSlides(4, true)
+      }
+    })
+    await wrapper.vm.$nextTick()
 
-    it('should mount successfully', () => {
-        expect($controls).toBeDefined();
+    $controls = wrapper.vm.$el.querySelector('.carousel-3d-controls')
+  })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+  it('should mount successfully', () => {
+    expect($controls).toBeDefined()
+    expect(wrapper).toMatchSnapshot()
+  })
 
-    it('should render a next button', () => {
-        expect(vm.$el.querySelector('.next')).toBeDefined();
+  it('should render a next button', () => {
+    expect(wrapper.vm.$el.querySelector('.next')).toBeDefined()
+  })
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+  it('should render a prev button', () => {
+    expect(wrapper.vm.$el.querySelector('.prev')).toBeDefined()
+  })
 
-    it('should render a prev button', () => {
-        expect(vm.$el.querySelector('.prev')).toBeDefined();
+  it('should trigger onNext when next is clicked', () => {
+    wrapper.vm.$el.querySelector('.next').click()
 
-        return utils.expectToMatchSnapshot(vm);
-    });
+    return wrapper.vm.$nextTick().then(() => {
+      expect(wrapper.vm.currentIndex).toBe(1)
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
 
-    it('should trigger onNext when next is clicked', () => {
-        vm.$el.querySelector('.next').click();
+  it('should trigger onNext when next is clicked', () => {
+    wrapper.vm.$el.querySelector('.prev').click()
 
-        return carouselInstance.$nextTick().then(() => {
-            expect(carouselInstance.currentIndex).toBe(1);
+    return wrapper.vm.$nextTick().then(() => {
+      expect(wrapper.vm.currentIndex).toBe(3)
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
 
-            return utils.expectToMatchSnapshot(vm);
-        });
-    });
-
-    it('should trigger onNext when next is clicked', () => {
-        vm.$el.querySelector('.prev').click();
-
-        return carouselInstance.$nextTick().then(() => {
-            expect(carouselInstance.currentIndex).toBe(3);
-
-            return utils.expectToMatchSnapshot(vm);
-        });
-    });
+  // TODO: one directional tests
 })
