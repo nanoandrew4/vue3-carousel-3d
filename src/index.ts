@@ -1,12 +1,12 @@
 import type { App, Plugin } from 'vue'
-import VCarousel3d from './components/Carousel3d.vue'
-import VSlide from './components/Slide.vue'
+import Carousel3d from './components/Carousel3d.vue'
+import Slide from './components/Slide.vue'
 
-const Carousel3d: Plugin = {
+const Carousel3dPlugin: Plugin = {
   install(app: App) {
-    app.component('Carousel3d', VCarousel3d)
-    app.component('Slide', VSlide)
+    app.component('Carousel3d', Carousel3d)
+    app.component('Slide', Slide)
   }
 }
 
-export default Carousel3d
+export { Carousel3dPlugin, Carousel3d, Slide }

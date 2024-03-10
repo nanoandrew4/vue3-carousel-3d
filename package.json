@@ -1,5 +1,5 @@
 {
-  "name": "vue3-carousel-3d",
+  "name": "@nanoandrew4/vue3-carousel-3d",
   "version": "1.0.0",
   "description": "Beautiful, flexible and touch supported 3D Carousel for Vue.js",
   "type": "module",
@@ -16,7 +16,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "mod-update": "rm -rf ./node-modules && npm i",
+    "mod-update": "rm -rf ./node_modules && rm -f package-lock.json && npm i",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "coverage": "vitest run --coverage",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/nanoandrew4/vue-carousel-3d.git"
+    "url": "git+ssh://git@github.com/nanoandrew4/vue3-carousel-3d.git"
   },
   "keywords": [
     "Vue3",
@@ -35,26 +35,19 @@
   "author": "Vladimir Bujanovic",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nanoandrew4/vue-carousel-3d/issues"
+    "url": "https://github.com/nanoandrew4/vue3-carousel-3d/issues"
   },
-  "homepage": "https://github.com/nanoandrew4/vue-carousel-3d#readme",
+  "homepage": "https://github.com/nanoandrew4/vue3-carousel-3d#readme",
   "dependencies": {
-    "@tsconfig/node18": "^18.2.2",
-    "@vue/tsconfig": "^0.5.1",
-    "vite": "^4.4.11",
-    "vue": "~3.2.31"
-  },
-  "peerDependencies": {
-    "@tsconfig/node18": "^18.2.2",
-    "@vue/tsconfig": "^0.5.1",
-    "vite": "^4.4.11",
-    "vue": "~3.2.31"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@tsconfig/node18": "^18.2.2",
     "@types/node": "^20.11.25",
     "@vitejs/plugin-vue": "^4.6.2",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/test-utils": "^2.4.4",
+    "@vue/tsconfig": "^0.5.1",
     "eslint": "^8.57.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-vue": "^8.7.1",
@@ -62,6 +55,7 @@
     "jsdom": "^24.0.0",
     "prettier": "^3.2.5",
     "start-server-and-test": "^2.0.3",
+    "vite": "^5.1.5",
     "vite-plugin-dts": "^3.7.3",
     "vitest": "^1.3.1"
   },

@@ -1,4 +1,4 @@
-import { defineComponent as p, openBlock as d, createElementBlock as c, createElementVNode as l, normalizeClass as u, withModifiers as m, normalizeStyle as h, resolveComponent as b, renderSlot as g, createBlock as y, createCommentVNode as I } from "vue";
+import { defineComponent as p, openBlock as d, createElementBlock as c, createElementVNode as l, normalizeClass as u, withModifiers as m, normalizeStyle as h, resolveComponent as b, renderSlot as g, createBlock as I, createCommentVNode as y } from "vue";
 const x = p({
   emits: ["goPrev", "goNext"],
   props: {
@@ -33,14 +33,13 @@ const x = p({
       required: !0
     }
   }
-});
-const f = (t, e) => {
-  const s = t.__vccOpts || t;
-  for (const [i, r] of e)
-    s[i] = r;
-  return s;
+}), f = (t, e) => {
+  const i = t.__vccOpts || t;
+  for (const [s, r] of e)
+    i[s] = r;
+  return i;
 }, S = { class: "carousel-3d-controls" }, w = ["innerHTML"], M = ["innerHTML"];
-function $(t, e, s, i, r, a) {
+function $(t, e, i, s, r, a) {
   return d(), c("div", S, [
     l("a", {
       href: "#",
@@ -213,8 +212,8 @@ const N = /* @__PURE__ */ f(x, [["render", $], ["__scopeId", "data-v-717c3828"]]
       return t < e && typeof window > "u" ? t : e;
     },
     slideHeight() {
-      const t = this.width + this.border * 2, e = this.height + this.border * 2, s = this.calculateAspectRatio(t, e);
-      return this.slideWidth / s;
+      const t = this.width + this.border * 2, e = this.height + this.border * 2, i = this.calculateAspectRatio(t, e);
+      return this.slideWidth / i;
     },
     visible() {
       return this.display > this.total ? this.total : this.display;
@@ -226,9 +225,9 @@ const N = /* @__PURE__ */ f(x, [["render", $], ["__scopeId", "data-v-717c3828"]]
       let t = (this.visible - 1) / 2;
       t = this.bias.toLowerCase() === "left" ? Math.ceil(t) : Math.floor(t);
       const e = [];
-      for (let s = 1; s <= t; s++)
+      for (let i = 1; i <= t; i++)
         e.push(
-          this.dir === "ltr" ? (this.currentIndex + s) % this.total : (this.currentIndex - s) % this.total
+          this.dir === "ltr" ? (this.currentIndex + i) % this.total : (this.currentIndex - i) % this.total
         );
       return e;
     },
@@ -236,9 +235,9 @@ const N = /* @__PURE__ */ f(x, [["render", $], ["__scopeId", "data-v-717c3828"]]
       let t = (this.visible - 1) / 2;
       t = this.bias.toLowerCase() === "right" ? Math.ceil(t) : Math.floor(t);
       const e = [];
-      for (let s = 1; s <= t; s++)
+      for (let i = 1; i <= t; i++)
         e.push(
-          this.dir === "ltr" ? (this.currentIndex - s) % this.total : (this.currentIndex + s) % this.total
+          this.dir === "ltr" ? (this.currentIndex - i) % this.total : (this.currentIndex + i) % this.total
         );
       return e;
     },
@@ -276,10 +275,10 @@ const N = /* @__PURE__ */ f(x, [["render", $], ["__scopeId", "data-v-717c3828"]]
     goFar(t) {
       let e = t === this.total - 1 && this.isFirstSlide ? -1 : t - this.currentIndex;
       this.isLastSlide && t === 0 && (e = 1);
-      const s = e < 0 ? -e : e;
-      let i = 0, r = 0;
-      for (; r < s; )
-        r += 1, setTimeout(() => e < 0 ? this.goPrev() : this.goNext(), s === 1 ? 0 : i), i += this.animationSpeed / s;
+      const i = e < 0 ? -e : e;
+      let s = 0, r = 0;
+      for (; r < i; )
+        r += 1, setTimeout(() => e < 0 ? this.goPrev() : this.goNext(), i === 1 ? 0 : s), s += this.animationSpeed / i;
     },
     /**
      * Trigger actions when animation ends
@@ -306,8 +305,8 @@ const N = /* @__PURE__ */ f(x, [["render", $], ["__scopeId", "data-v-717c3828"]]
       if (!this.mousedown)
         return;
       t.touches && (t = t.touches[0]);
-      const e = t.clientX, s = t.clientY, i = this.dragStartX - e, r = this.dragStartY - s;
-      this.dragOffsetX = i, this.dragOffsetY = r, !(Math.abs(this.dragOffsetY) > Math.abs(this.dragOffsetX)) && (this.dragOffsetX > this.minSwipeDistance ? (this.handleMouseup(), this.goNext()) : this.dragOffsetX < -this.minSwipeDistance && (this.handleMouseup(), this.goPrev()));
+      const e = t.clientX, i = t.clientY, s = this.dragStartX - e, r = this.dragStartY - i;
+      this.dragOffsetX = s, this.dragOffsetY = r, !(Math.abs(this.dragOffsetY) > Math.abs(this.dragOffsetX)) && (this.dragOffsetX > this.minSwipeDistance ? (this.handleMouseup(), this.goNext()) : this.dragOffsetX < -this.minSwipeDistance && (this.handleMouseup(), this.goPrev()));
     },
     /**
      * A mutation observer is used to detect changes to the containing node
@@ -370,7 +369,7 @@ const N = /* @__PURE__ */ f(x, [["render", $], ["__scopeId", "data-v-717c3828"]]
     this.detachMutationObserver(), window.removeEventListener("resize", this.setSize);
   }
 });
-function C(t, e, s, i, r, a) {
+function O(t, e, i, s, r, a) {
   const o = b("Controls");
   return d(), c("div", {
     class: "carousel-3d-container",
@@ -392,7 +391,7 @@ function C(t, e, s, i, r, a) {
     }, [
       g(t.$slots, "default", {}, void 0, !0)
     ], 4),
-    t.controlsVisible ? (d(), y(o, {
+    t.controlsVisible ? (d(), I(o, {
       key: 0,
       "next-html": t.controlsNextHtml,
       "prev-html": t.controlsPrevHtml,
@@ -402,20 +401,19 @@ function C(t, e, s, i, r, a) {
       "is-next-possible": t.isNextPossible,
       onGoPrev: t.goPrev,
       onGoNext: t.goNext
-    }, null, 8, ["next-html", "prev-html", "width", "height", "is-prev-possible", "is-next-possible", "onGoPrev", "onGoNext"])) : I("", !0)
+    }, null, 8, ["next-html", "prev-html", "width", "height", "is-prev-possible", "is-next-possible", "onGoPrev", "onGoNext"])) : y("", !0)
   ], 36);
 }
-const O = /* @__PURE__ */ f(P, [["render", C], ["__scopeId", "data-v-326cf73d"]]), H = p({
+const C = /* @__PURE__ */ f(P, [["render", O], ["__scopeId", "data-v-326cf73d"]]), H = p({
   props: {
     index: {
       type: Number
     }
   },
   data() {
-    let t;
     return {
       parent: this.$parent,
-      styles: t,
+      styles: void 0,
       zIndex: 999
     };
   },
@@ -432,8 +430,8 @@ const O = /* @__PURE__ */ f(P, [["render", C], ["__scopeId", "data-v-326cf73d"]]
     slideStyle() {
       let t = this.baseStyle();
       if (!this.isCurrent) {
-        const e = this.leftIndex, s = this.rightIndex;
-        (s >= 0 || e >= 0) && (t = s >= 0 ? this.calculatePosition(s, !0, this.zIndex) : this.calculatePosition(e, !1, this.zIndex), t = Object.assign(t, { opacity: 1, visibility: "visible" })), this.parent.hasHiddenSlides && (this.matchIndex(this.parent.leftOutIndex) ? t = this.calculatePosition(this.parent.leftIndices.length - 1, !1, this.zIndex) : this.matchIndex(this.parent.rightOutIndex) && (t = this.calculatePosition(this.parent.rightIndices.length - 1, !0, this.zIndex)));
+        const e = this.leftIndex, i = this.rightIndex;
+        (i >= 0 || e >= 0) && (t = i >= 0 ? this.calculatePosition(i, !0, this.zIndex) : this.calculatePosition(e, !1, this.zIndex), t = Object.assign(t, { opacity: 1, visibility: "visible" })), this.parent.hasHiddenSlides && (this.matchIndex(this.parent.leftOutIndex) ? t = this.calculatePosition(this.parent.leftIndices.length - 1, !1, this.zIndex) : this.matchIndex(this.parent.rightOutIndex) && (t = this.calculatePosition(this.parent.rightIndices.length - 1, !0, this.zIndex)));
       }
       return t;
     },
@@ -448,8 +446,8 @@ const O = /* @__PURE__ */ f(P, [["render", C], ["__scopeId", "data-v-326cf73d"]]
   methods: {
     getSideIndex(t) {
       let e = -1;
-      return t.forEach((s, i) => {
-        this.matchIndex(s) && (e = i);
+      return t.forEach((i, s) => {
+        this.matchIndex(i) && (e = s);
       }), e;
     },
     matchIndex(t) {
@@ -463,12 +461,12 @@ const O = /* @__PURE__ */ f(P, [["render", C], ["__scopeId", "data-v-326cf73d"]]
         transition: " transform " + this.parent.animationSpeed + "ms,                opacity " + this.parent.animationSpeed + "ms,                visibility " + this.parent.animationSpeed + "ms"
       };
     },
-    calculatePosition(t, e, s) {
-      const i = this.baseStyle(), r = this.parent.disable3d ? 0 : parseInt(this.parent.inverseScaling) + (t + 1) * 100, a = this.parent.disable3d ? 0 : parseInt(this.parent.perspective), o = this.parent.space === "auto" ? (t + 1) * (this.parent.width / 1.5) : (t + 1) * this.parent.space, n = e ? "translateX(" + o + "px) translateZ(-" + r + "px) rotateY(-" + a + "deg)" : "translateX(-" + o + "px) translateZ(-" + r + "px) rotateY(" + a + "deg)", v = this.parent.space === "auto" ? 0 : (t + 1) * this.parent.space;
-      return Object.assign(i, {
+    calculatePosition(t, e, i) {
+      const s = this.baseStyle(), r = this.parent.disable3d ? 0 : parseInt(this.parent.inverseScaling) + (t + 1) * 100, a = this.parent.disable3d ? 0 : parseInt(this.parent.perspective), o = this.parent.space === "auto" ? (t + 1) * (this.parent.width / 1.5) : (t + 1) * this.parent.space, n = e ? "translateX(" + o + "px) translateZ(-" + r + "px) rotateY(-" + a + "deg)" : "translateX(-" + o + "px) translateZ(-" + r + "px) rotateY(" + a + "deg)", v = this.parent.space === "auto" ? 0 : (t + 1) * this.parent.space;
+      return Object.assign(s, {
         transform: n,
         top: v,
-        zIndex: s - (Math.abs(t) + 1)
+        zIndex: i - (Math.abs(t) + 1)
       });
     },
     goTo() {
@@ -481,7 +479,7 @@ const O = /* @__PURE__ */ f(P, [["render", C], ["__scopeId", "data-v-326cf73d"]]
     }
   }
 });
-function L(t, e, s, i, r, a) {
+function L(t, e, i, s, r, a) {
   return d(), c("div", {
     class: u(["carousel-3d-slide", t.computedClasses]),
     style: h(t.slideStyle),
@@ -497,9 +495,11 @@ function L(t, e, s, i, r, a) {
 }
 const T = /* @__PURE__ */ f(H, [["render", L], ["__scopeId", "data-v-f75c401f"]]), X = {
   install(t) {
-    t.component("Carousel3d", O), t.component("Slide", T);
+    t.component("Carousel3d", C), t.component("Slide", T);
   }
 };
 export {
-  X as default
+  C as Carousel3d,
+  X as Carousel3dPlugin,
+  T as Slide
 };
