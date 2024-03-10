@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, type StyleValue } from 'vue'
-import type Carousel3d from '@/components/Carousel3d/Carousel3d.vue'
+import type Carousel3d from '@/components/Carousel3d.vue'
 
 export default defineComponent({
   props: {
@@ -80,13 +80,11 @@ export default defineComponent({
     getSideIndex(array: number[]) {
       let index = -1
 
-      if (array) {
-        array.forEach((pos, i) => {
-          if (this.matchIndex(pos)) {
-            index = i
-          }
-        })
-      }
+      array.forEach((pos, i) => {
+        if (this.matchIndex(pos)) {
+          index = i
+        }
+      })
 
       return index
     },

@@ -4,7 +4,7 @@
       href="#"
       class="prev"
       @click.prevent="$emit('goPrev')"
-      :class="{ disabled: isPrevPossible }"
+      :class="{ disabled: !isPrevPossible }"
       :style="`width: ${width}px; height: ${height}px; line-height: ${height}px;`"
       aria-label="Previous slide"
     >
@@ -14,7 +14,7 @@
       href="#"
       class="next"
       @click.prevent="$emit('goNext')"
-      :class="{ disabled: isNextPossible }"
+      :class="{ disabled: !isNextPossible }"
       :style="`width: ${width}px; height: ${height}px; line-height: ${height}px;`"
       aria-label="Next slide"
     >

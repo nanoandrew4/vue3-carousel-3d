@@ -1,5 +1,3 @@
-const utils = require('../utils')
-
 import Carousel3d from '../../../src/components/Carousel3d/Carousel3d.vue'
 import Slide from '../../../src/components/Slide/Slide.vue'
 
@@ -28,7 +26,7 @@ describe('Slide', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('should render a scoped slot', () => {
+  test('should render a scoped slot', async () => {
     const wrapper = mount(Carousel3d, {
       slots: {
         default: () =>
@@ -42,13 +40,14 @@ describe('Slide', () => {
                 default: (props) =>
                   h({
                     setup() {
-                      return () =>
-                        h('div', {
+                      return () => {
+                        return h('div', {
                           'data-left-index': props.leftIndex,
                           'data-right-index': props.rightIndex,
                           'data-index': props.index,
                           'data-is-current': props.isCurrent ? 'true' : null
                         })
+                      }
                     }
                   })
               }
@@ -56,6 +55,8 @@ describe('Slide', () => {
           )
       }
     })
+
+    await wrapper.vm.$nextTick() // give the test a sec to render everything and apply parent props to children
     expect(wrapper).toMatchSnapshot()
   })
 })

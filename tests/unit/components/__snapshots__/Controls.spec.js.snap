@@ -1,81 +1,82 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Controls should mount successfully 1`] = `
-".carousel-3d-slider(style='width: 362px; height: 272px;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-|  
-.carousel-3d-controls
-  a.prev(href='#', aria-label='Previous slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &lsaquo;
-  |  
-  a.next(href='#', aria-label='Next slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &rsaquo;
-"
+exports[`Controls > should mount successfully 1`] = `
+<div class="carousel-3d-container" style="height: 272px;">
+  <div class="carousel-3d-slider" style="width: 362px; height: 272px;">
+    <div class="carousel-3d-slide current" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;">
+      <div data-index="0" data-is-current="true" data-left-index="-1" data-right-index="-1"></div>
+    </div>
+    <div class="carousel-3d-slide right-1" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(240px) translateZ(-400px) rotateY(-35deg); top: 0px; z-index: 998; opacity: 1; visibility: visible;">
+      <div data-index="1" data-left-index="-1" data-right-index="0"></div>
+    </div>
+    <div class="carousel-3d-slide left-2" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(-480px) translateZ(-500px) rotateY(35deg); top: 0px; z-index: 997; opacity: 1; visibility: visible;">
+      <div data-index="2" data-left-index="1" data-right-index="-1"></div>
+    </div>
+    <div class="carousel-3d-slide left-1" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(-240px) translateZ(-400px) rotateY(35deg); top: 0px; z-index: 998; opacity: 1; visibility: visible;">
+      <div data-index="3" data-left-index="0" data-right-index="-1"></div>
+    </div>
+  </div>
+  <div class="carousel-3d-controls">
+    <a aria-label="Previous slide" class="prev" href="#" style="width: 50px; height: 50px; line-height: 50px;">
+      <span>‹</span>
+    </a>
+    <a aria-label="Next slide" class="next" href="#" style="width: 50px; height: 50px; line-height: 50px;">
+      <span>›</span>
+    </a>
+  </div>
+</div>
 `;
 
-exports[`Controls should render a next button 1`] = `
-".carousel-3d-slider(style='width: 362px; height: 272px;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-|  
-.carousel-3d-controls
-  a.prev(href='#', aria-label='Previous slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &lsaquo;
-  |  
-  a.next(href='#', aria-label='Next slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &rsaquo;
-"
+exports[`Controls > should trigger onNext when next is clicked 1`] = `
+<div class="carousel-3d-container" style="height: 272px;">
+  <div class="carousel-3d-slider" style="width: 362px; height: 272px;">
+    <div class="carousel-3d-slide left-1" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(-240px) translateZ(-400px) rotateY(35deg); top: 0px; z-index: 998; opacity: 1; visibility: visible;">
+      <div data-index="0" data-left-index="0" data-right-index="-1"></div>
+    </div>
+    <div class="carousel-3d-slide current" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;">
+      <div data-index="1" data-is-current="true" data-left-index="-1" data-right-index="-1"></div>
+    </div>
+    <div class="carousel-3d-slide right-1" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(240px) translateZ(-400px) rotateY(-35deg); top: 0px; z-index: 998; opacity: 1; visibility: visible;">
+      <div data-index="2" data-left-index="-1" data-right-index="0"></div>
+    </div>
+    <div class="carousel-3d-slide left-2" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(-480px) translateZ(-500px) rotateY(35deg); top: 0px; z-index: 997; opacity: 1; visibility: visible;">
+      <div data-index="3" data-left-index="1" data-right-index="-1"></div>
+    </div>
+  </div>
+  <div class="carousel-3d-controls">
+    <a aria-label="Previous slide" class="prev" href="#" style="width: 50px; height: 50px; line-height: 50px;">
+      <span>‹</span>
+    </a>
+    <a aria-label="Next slide" class="next" href="#" style="width: 50px; height: 50px; line-height: 50px;">
+      <span>›</span>
+    </a>
+  </div>
+</div>
 `;
 
-exports[`Controls should render a prev button 1`] = `
-".carousel-3d-slider(style='width: 362px; height: 272px;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-|  
-.carousel-3d-controls
-  a.prev(href='#', aria-label='Previous slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &lsaquo;
-  |  
-  a.next(href='#', aria-label='Next slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &rsaquo;
-"
-`;
-
-exports[`Controls should trigger onNext when next is clicked 1`] = `
-".carousel-3d-slider(style='width: 362px; height: 272px;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-|  
-.carousel-3d-controls
-  a.prev(href='#', aria-label='Previous slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &lsaquo;
-  |  
-  a.next(href='#', aria-label='Next slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &rsaquo;
-"
-`;
-
-exports[`Controls should trigger onNext when next is clicked 2`] = `
-".carousel-3d-slider(style='width: 362px; height: 272px;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-  .carousel-3d-slide(style='border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;')
-|  
-.carousel-3d-controls
-  a.prev(href='#', aria-label='Previous slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &lsaquo;
-  |  
-  a.next(href='#', aria-label='Next slide', style='width: 50px; height: 50px; line-height: 50px;')
-    span &rsaquo;
-"
+exports[`Controls > should trigger onNext when next is clicked 2`] = `
+<div class="carousel-3d-container" style="height: 272px;">
+  <div class="carousel-3d-slider" style="width: 362px; height: 272px;">
+    <div class="carousel-3d-slide right-1" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(240px) translateZ(-400px) rotateY(-35deg); top: 0px; z-index: 998; opacity: 1; visibility: visible;">
+      <div data-index="0" data-left-index="-1" data-right-index="0"></div>
+    </div>
+    <div class="carousel-3d-slide left-2" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(-480px) translateZ(-500px) rotateY(35deg); top: 0px; z-index: 997; opacity: 1; visibility: visible;">
+      <div data-index="1" data-left-index="1" data-right-index="-1"></div>
+    </div>
+    <div class="carousel-3d-slide left-1" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms; transform: translateX(-240px) translateZ(-400px) rotateY(35deg); top: 0px; z-index: 998; opacity: 1; visibility: visible;">
+      <div data-index="2" data-left-index="0" data-right-index="-1"></div>
+    </div>
+    <div class="carousel-3d-slide current" style="border-width: 1px; width: 362px; height: 272px; transition:  transform 500ms,                opacity 500ms,                visibility 500ms;">
+      <div data-index="3" data-is-current="true" data-left-index="-1" data-right-index="-1"></div>
+    </div>
+  </div>
+  <div class="carousel-3d-controls">
+    <a aria-label="Previous slide" class="prev" href="#" style="width: 50px; height: 50px; line-height: 50px;">
+      <span>‹</span>
+    </a>
+    <a aria-label="Next slide" class="next" href="#" style="width: 50px; height: 50px; line-height: 50px;">
+      <span>›</span>
+    </a>
+  </div>
+</div>
 `;

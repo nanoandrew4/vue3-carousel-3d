@@ -10,7 +10,7 @@
     @mousemove="handleMousemove"
   >
     <div
-      id="carousel-3d-slider"
+      ref="slider"
       class="carousel-3d-slider"
       :style="{
         width: slideWidth + 'px',
@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Controls from '../Controls/Controls.vue'
+import Controls from '@/components/Controls.vue'
 
 export default defineComponent({
   components: {
@@ -408,11 +408,11 @@ export default defineComponent({
      * Get the number of slides
      */
     getSlideCount(): number {
-      const slider = document.getElementById('carousel-3d-slider')
-      let ret = 0
-      if (slider) {
-        ret = slider.children.length
-      }
+      let ret = 0;
+      const slider = this.$refs.slider as HTMLElement
+      if (slider && slider.children)
+        ret = slider.children.length;
+
       return ret
     },
     /**

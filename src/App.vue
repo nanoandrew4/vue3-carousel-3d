@@ -179,8 +179,8 @@
 </template>
 
 <script lang="ts">
-import Carousel3d from '@/components/Carousel3d/Carousel3d.vue'
-import Slide from '@/components/Slide/Slide.vue'
+import Carousel3d from '@/components/Carousel3d.vue'
+import Slide from '@/components/Slide.vue'
 import { defineComponent } from 'vue';
 
 const slides = [
