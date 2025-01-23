@@ -25,7 +25,7 @@ You may install Vue Carousel 3d globally:
 import '@nanoandrew4/vue3-carousel-3d/dist/style.css'
 
 import { createApp } from 'vue'
-import { Carousel3dPlugin } from '@nanoandrew4/vue-carousel-3d'
+import { Carousel3dPlugin } from '@nanoandrew4/vue3-carousel-3d'
 
 const app = createApp(App)
 
@@ -38,7 +38,7 @@ This will make **&lt;Carousel3d&gt;** and **&lt;Slide&gt;** available to all com
 Include the Carousel 3d into your component using import:
 
 ``` js
-import { Carousel3d, Slide } from 'vue-carousel-3d';
+import { Carousel3d, Slide } from '@nanoandrew4/vue3-carousel-3d';
 
 export default {
   ...
