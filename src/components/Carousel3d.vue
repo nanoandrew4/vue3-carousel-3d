@@ -162,7 +162,7 @@ export default defineComponent({
       autoplayInterval: 0
     }
   },
-  destroyed() {
+  unmounted() {
     this.pauseAutoplay()
 
     this.$el.removeEventListener('mouseenter', this.pauseAutoplay)
