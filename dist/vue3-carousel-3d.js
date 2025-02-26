@@ -186,7 +186,7 @@ const N = /* @__PURE__ */ f(x, [["render", $], ["__scopeId", "data-v-717c3828"]]
       autoplayInterval: 0
     };
   },
-  destroyed() {
+  unmounted() {
     this.pauseAutoplay(), this.$el.removeEventListener("mouseenter", this.pauseAutoplay), this.$el.removeEventListener("mouseleave", this.startAutoplay);
   },
   watch: {
@@ -404,7 +404,7 @@ function O(t, e, i, s, r, a) {
     }, null, 8, ["next-html", "prev-html", "width", "height", "is-prev-possible", "is-next-possible", "onGoPrev", "onGoNext"])) : y("", !0)
   ], 36);
 }
-const C = /* @__PURE__ */ f(P, [["render", O], ["__scopeId", "data-v-326cf73d"]]), H = p({
+const C = /* @__PURE__ */ f(P, [["render", O], ["__scopeId", "data-v-7af7631c"]]), H = p({
   props: {
     index: {
       type: Number
