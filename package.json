@@ -1,6 +1,6 @@
 {
   "name": "@nanoandrew4/vue3-carousel-3d",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Beautiful, flexible and touch supported 3D Carousel for Vue.js",
   "type": "module",
   "main": "./dist/vue3-carousel-3d.umd.js",
