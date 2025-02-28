@@ -127,7 +127,8 @@ export default defineComponent({
       default: 'left'
     },
     onMainSlideClick: {
-      type: Function
+      type: Function,
+      default: () => {}
     },
     oneDirectional: {
       type: Boolean,

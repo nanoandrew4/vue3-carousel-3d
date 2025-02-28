@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Beautiful, flexible and touch supported 3D Carousel for Vue.js",
   "type": "module",
-  "main": "./dist/vue3-carousel-3d.umd.js",
+  "main": "./dist/vue3-carousel-3d.umd.cjs",
   "module": "./dist/vue3-carousel-3d.js",
   "types": "./dist/index.d.ts",
   "export": {
